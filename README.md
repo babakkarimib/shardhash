@@ -111,19 +111,13 @@ Mining consists solely of searching for increasingly rare valid outputs.
 
 ## 6. Solution Quality
 
-Let
-
-```text
-diff = candidate XOR challenge
-```
-
 The solution tier equals the number of consecutive matching hexadecimal digits starting from the least significant hexadecimal digit.
 
 Formally:
 
 ```text
 tier =
-trailing_zero_hex_digits(diff)
+trailing_zero_hex_digits(candidate, challenge)
 ```
 
 Only solutions with
