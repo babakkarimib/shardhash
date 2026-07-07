@@ -216,7 +216,12 @@ Supported implementations include:
 
 Mining is stateless and embarrassingly parallel.
 
-> **Note:** The reference miner implementation is not included in this repository yet. It will be added in a future update as a Rust-based reference implementation supporting multi-threaded CPU mining, with optional CUDA and OpenCL GPU backends.
+> **Note:** The official reference miner is available in the dedicated **sharden-miner** repository:
+> 
+> https://github.com/babakkarimib/sharden-miner
+> 
+> It currently provides a Rust-based single-threaded CPU miner. Future updates will add multi-threaded CPU mining, with optional CUDA and OpenCL GPU backends.
+
 
 ---
 
