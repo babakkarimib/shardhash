@@ -208,7 +208,6 @@ Shardhash is designed for parallel computation.
 
 Supported implementations include:
 
-- Single-thread CPU
 - Multi-thread CPU
 - GPU (CUDA)
 - GPU (OpenCL)
@@ -220,7 +219,7 @@ Mining is stateless and embarrassingly parallel.
 > 
 > https://github.com/babakkarimib/sharden-miner
 > 
-> It currently provides a Rust-based single-threaded CPU miner. Future updates will add multi-threaded CPU mining, with optional CUDA and OpenCL GPU backends.
+> It currently provides a Rust-based multi-threaded CPU miner. Future updates will add CUDA and OpenCL GPU backends.
 
 
 ---
