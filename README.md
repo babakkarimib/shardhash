@@ -62,15 +62,28 @@ The Ethereum block cycle is currently approximately 12 seconds on average. Since
 
 Claims are valid only during the active round.
 
+### Round Overlap
+
+The challenge for round `R` is derived from Ethereum block hashes preceding that round. As a result, miners can begin searching for valid solutions for round `R` immediately after the preceding block is produced, before round `R` itself becomes claimable.
+
+This creates an overlap of approximately one Ethereum block interval between consecutive rounds. During this overlap:
+
+- Round `R−1` remains claimable.
+- Round `R` is already mineable.
+
+Since each `(round, tier)` pair may be claimed only once, miners must decide whether to continue searching for additional or higher-tier solutions for the current claimable round or switch their computational resources to the next round.
+
 ---
 
 ## 4. Challenge Generation
 
-Every round derives a deterministic challenge from the previous sixteen Ethereum block hashes.
+Every round derives a deterministic challenge from the sixteen Ethereum block hashes preceding that round. This allows the challenge for a new round to be known before the round becomes claimable, enabling miners to begin searching immediately.
 
 Conceptually:
 
 ```text
+n = block.number - 1    // round
+
 challenge =
 keccak256(
     blockhash(n−1),
@@ -117,7 +130,7 @@ Formally:
 
 ```text
 tier =
-trailing_zero_hex_digits(candidate, challenge)
+trailing_matching_hex_digits(candidate, challenge)
 ```
 
 Only solutions with
@@ -134,6 +147,8 @@ Higher tiers are exponentially rarer.
 
 ## 7. Reward Schedule
 
+SHARDEN is an ERC-20 token with 18 decimal places. Mining rewards are denominated in the token's smallest indivisible unit (base units).
+
 Reward function:
 
 ```text
@@ -146,21 +161,29 @@ for
 n ≥ 10
 ```
 
-### Examples
+base units.
 
-| Tier | SHARDEN |
-|------:|---------:|
-| 10 | 1 |
-| 11 | 10 |
-| 12 | 100 |
-| 13 | 1,000 |
-| 14 | 10,000 |
-| 15 | 100,000 |
-| 16 | 1,000,000 |
+Since
+
+```text
+1 SHARDEN = 10^18 base units
+```
+
+the corresponding token amounts displayed by wallets and block explorers are:
+
+| Tier | Base Units | SHARDEN |
+|------:|-----------:|--------:|
+| 10 | 1 | 0.000000000000000001 |
+| 11 | 10 | 0.00000000000000001 |
+| 12 | 100 | 0.0000000000000001 |
+| 13 | 1,000 | 0.000000000000001 |
+| 14 | 10,000 | 0.00000000000001 |
+| 15 | 100,000 | 0.0000000000001 |
+| 16 | 1,000,000 | 0.000000000001 |
 
 Each additional matching hexadecimal digit increases mining difficulty by approximately **16×**, since every additional hexadecimal digit has a probability of **1/16** of matching.
 
-Rewards, however, increase by **10×** per tier rather than **16×**. The objective is for the majority of long-term SHARDEN issuance to originate from the low- and mid-tier rewards, while still preserving substantial incentives for discovering exceptionally rare, high-tier solutions. If rewards increased at the same rate as difficulty (16×), these extremely rare discoveries would eventually account for a disproportionately large share of total token issuance.
+Rewards increase by **10×** per tier. The objective is for the majority of long-term issuance to originate from the lower and middle reward tiers while preserving substantial incentives for discovering exceptionally rare, high-tier solutions.
 
 ---
 
