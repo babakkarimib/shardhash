@@ -11,6 +11,9 @@ Ethereum:
 - Token: https://etherscan.io/token/0xbE8C49840e12718d9fA3c740f32eAB808Edd8780
 - Protocol Contract: https://etherscan.io/address/0x295121422b9d0fd3cbddc9e203ae9b4a1eff0082
 
+Miner:
+- https://github.com/babakkarimib/sharden-miner
+
 ---
 
 # Shardhash Protocol Specification
